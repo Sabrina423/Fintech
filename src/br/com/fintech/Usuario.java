@@ -7,24 +7,31 @@ public class Usuario {
     private String senha;
     private String perfilFinanceiro;
 
-    public Usuario(String nome, String email, String cpfCnpj, String senha){
+    public Usuario(String nome, String email, String cpfCnpj, String senha, String perfilFinanceiro) {
         this.nome = nome;
         this.email = email;
         this.cpfCnpj = cpfCnpj;
         this.senha = senha;
-
+        this.perfilFinanceiro = perfilFinanceiro;
     }
 
-    public void cadastrarUsuario(){
-        System.out.println("Cadastrando usuário" + nome);
+    public String getNome() {
+        return nome;
     }
 
-    public void validarDocumento(){
-        System.out.println("Validando CPF/CNPJ" + cpfCnpj);
+    public String getEmail() {
+        return email;
     }
 
-    public void configurarPerfilFinanceiro(String perfil){
-        this.perfilFinanceiro = perfil;
-        System.out.println("Perfil financeiro configurado como:" + perfilFinanceiro);
+    public String getCpfCnpj() {
+        return cpfCnpj;
+    }
+
+    public String getPerfilFinanceiro() {
+        return perfilFinanceiro;
+    }
+
+    public boolean autenticar(String email, String senha) {
+        return this.email.equals(email) && this.senha.equals(senha);
     }
 }

@@ -2,27 +2,28 @@ package br.com.fintech;
 
 public class Investimento {
     private String tipo;
-    private double valorInvestido;
-    private double rentabilidade;
-    private String prazo;
+    private double valor;
+    private double rendimentoMensal; // em %
 
-    public Investimento(String tipo, double valorInvestido, double rentabilidade, String prazo) {
+    public Investimento(String tipo, double valor, double rendimentoMensal) {
         this.tipo = tipo;
-        this.valorInvestido = valorInvestido;
-        this.rentabilidade = rentabilidade;
-        this.prazo = prazo;
+        this.valor = valor;
+        this.rendimentoMensal = rendimentoMensal;
     }
 
-    public void definirPerfilInvestidor(String perfil) {
-        System.out.println("Definindo perfil do investidor como: " + perfil);
+    public String getTipo() {
+        return tipo;
     }
 
-    public void sugerirInvestimentos() {
-        System.out.println("Sugerindo investimentos para o perfil com base no tipo: " + tipo);
+    public double getValor() {
+        return valor;
     }
 
-    public void simularRentabilidade() {
-        double retorno = valorInvestido * rentabilidade;
-        System.out.println("Simulação: Investindo R$ " + valorInvestido + " no " + tipo + ", retorno estimado: R$ " + retorno);
+    public double getRendimentoMensal() {
+        return rendimentoMensal;
+    }
+
+    public double calcularRendimento() {
+        return valor * (rendimentoMensal / 100);
     }
 }

@@ -1,131 +1,112 @@
 package br.com.fintech;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-        Scanner leitor = new Scanner(System.in);
-        System.out.println("Bem-vindo ao Sistema Fintech :)");
+        Usuario usuario = new Usuario("Sassah", "sassah@email.com", "12345678900", "123456", "Equilibrado");
+        Conta conta = new Conta("001", usuario.getNome(), 1000);
 
+        List<Transacao> transacoes = new ArrayList<>();
+        List<Investimento> investimentos = new ArrayList<>();
+        List<MetaFinanceira> metas = new ArrayList<>();
+        List<Divida> dividas = new ArrayList<>();
 
-        System.out.println("\nCadastro de Usuário");
-        System.out.print("Digite o nome: ");
-        String nomeUsuario = leitor.nextLine();
-        System.out.print("Digite o e-mail: ");
-        String emailUsuario = leitor.nextLine();
-        System.out.print("Digite o CPF/CNPJ: ");
-        String cpfCnpjUsuario = leitor.nextLine();
-        System.out.print("Digite a senha: ");
-        String senhaUsuario = leitor.nextLine();
+        int opcao;
+        do {
+            System.out.println("\nBem Vindo(a) a nossa Fintech");
+            System.out.println("1. Ver saldo");
+            System.out.println("2. Depositar");
+            System.out.println("3. Sacar");
+            System.out.println("4. Registrar transação");
+            System.out.println("5. Criar meta financeira");
+            System.out.println("6. Adicionar dívida");
+            System.out.println("7. Investir");
+            System.out.println("8. Recomendações de IA");
+            System.out.println("0. Sair");
+            System.out.print("Escolha: ");
+            opcao = sc.nextInt();
+            sc.nextLine();
 
-        Usuario u = new Usuario(nomeUsuario, emailUsuario, cpfCnpjUsuario, senhaUsuario);
-        u.cadastrarUsuario();
-        u.validarDocumento();
-        u.configurarPerfilFinanceiro("Moderado");
+            switch (opcao) {
+                case 1:
+                    System.out.println("Saldo atual: R$ " + conta.getSaldo());
+                    break;
 
+                case 2:
+                    System.out.print("Valor do depósito: ");
+                    double dep = sc.nextDouble();
+                    conta.depositar(dep);
+                    System.out.println("Depósito realizado!");
+                    break;
 
-        System.out.println("\nCadastro de Conta");
-        System.out.print("Digite o número da conta: ");
-        int numeroConta = leitor.nextInt();
-        leitor.nextLine();
-        System.out.print("Digite o tipo da conta: ");
-        String tipoConta = leitor.nextLine();
-        System.out.print("Digite o saldo inicial: ");
-        double saldoInicial = leitor.nextDouble();
-        leitor.nextLine();
+                case 3:
+                    System.out.print("Valor do saque: ");
+                    double saque = sc.nextDouble();
+                    if (conta.sacar(saque)) {
+                        System.out.println("Saque realizado!");
+                    } else {
+                        System.out.println("Saldo insuficiente!");
+                    }
+                    break;
 
-        Conta c = new Conta(numeroConta, tipoConta, saldoInicial);
-        c.consultarSaldo();
-        c.exibirHistoricoTransacoes();
-        c.sincronizarComBanco();
+                case 4:
+                    System.out.print("Descrição da transação: ");
+                    String desc = sc.nextLine();
+                    System.out.print("Valor: ");
+                    double val = sc.nextDouble();
+                    transacoes.add(new Transacao(desc, val, LocalDate.now()));
+                    System.out.println("Transação registrada!");
+                    break;
 
+                case 5:
+                    System.out.print("Objetivo da meta: ");
+                    String objetivo = sc.nextLine();
+                    System.out.print("Valor meta: ");
+                    double metaValor = sc.nextDouble();
+                    metas.add(new MetaFinanceira(objetivo, metaValor));
+                    System.out.println("Meta criada!");
+                    break;
 
-        System.out.println("\nRegistro de Transação");
-        System.out.print("Digite o ID da transação: ");
-        int idTransacao = leitor.nextInt();
-        leitor.nextLine();
-        System.out.print("Digite o valor da transação: ");
-        double valorTransacao = leitor.nextDouble();
-        leitor.nextLine();
-        System.out.print("Digite o tipo (Ex: Depósito, Saque): ");
-        String tipoTransacao = leitor.nextLine();
-        System.out.print("Digite a data: ");
-        String dataTransacao = leitor.nextLine();
-        System.out.print("Digite a categoria: ");
-        String categoriaTransacao = leitor.nextLine();
+                case 6:
+                    System.out.print("Descrição da dívida: ");
+                    String divDesc = sc.nextLine();
+                    System.out.print("Valor: ");
+                    double divVal = sc.nextDouble();
+                    dividas.add(new Divida(divDesc, divVal));
+                    System.out.println("Dívida registrada!");
+                    break;
 
-        Transacao t = new Transacao(idTransacao, valorTransacao, tipoTransacao, dataTransacao, categoriaTransacao);
-        t.executarTransacao();
-        t.cancelarTransacao();
-        t.filtrarTransacoesPorCategoria();
+                case 7:
+                    System.out.print("Tipo de investimento: ");
+                    String tipo = sc.nextLine();
+                    System.out.print("Valor investido: ");
+                    double invVal = sc.nextDouble();
+                    System.out.print("Rendimento mensal (%): ");
+                    double rendimento = sc.nextDouble();
+                    investimentos.add(new Investimento(tipo, invVal, rendimento));
+                    System.out.println("Investimento realizado!");
+                    break;
 
+                case 8:
+                    String recomendacao = InteligenciaArtificial.recomendarInvestimento(conta.getSaldo());
+                    System.out.println(recomendacao);
+                    break;
 
-        System.out.println("\nCadastro de Meta Financeira");
-        System.out.print("Digite a descrição da meta: ");
-        String descricaoMeta = leitor.nextLine();
-        System.out.print("Digite o valor da meta: ");
-        double valorMeta = leitor.nextDouble();
-        leitor.nextLine();
-        System.out.print("Digite o valor atual: ");
-        double valorAtualMeta = leitor.nextDouble();
-        leitor.nextLine();
-        System.out.print("Digite o prazo: ");
-        String prazoMeta = leitor.nextLine();
+                case 0:
+                    System.out.println("Encerrando...");
+                    break;
 
-        MetaFinanceira m = new MetaFinanceira(descricaoMeta, valorMeta, valorAtualMeta, prazoMeta);
-        m.criarMeta();
-        m.simularContribuicaoMensal();
-        m.acompanharProgresso();
+                default:
+                    System.out.println("Opção inválida!");
+            }
+        } while (opcao != 0);
 
-
-        System.out.println("\nCadastro de Dívida");
-        System.out.print("Digite o credor: ");
-        String credorDivida = leitor.nextLine();
-        System.out.print("Digite o valor da dívida: ");
-        double valorDivida = leitor.nextDouble();
-        leitor.nextLine();
-        System.out.print("Digite a data de vencimento: ");
-        String dataVencimentoDivida = leitor.nextLine();
-        System.out.print("Digite o status da dívida (Ex: Em aberto, Pago): ");
-        String statusDivida = leitor.nextLine();
-
-        Divida d = new Divida(credorDivida, valorDivida, dataVencimentoDivida, statusDivida);
-        d.cadastrarDivida();
-        d.listarDividas();
-        d.calcularJuros();
-
-
-        System.out.println("\nCadastro de Investimento");
-        System.out.print("Digite o tipo de investimento: ");
-        String tipoInvestimento = leitor.nextLine();
-        System.out.print("Digite o valor investido: ");
-        double valorInvestido = leitor.nextDouble();
-        leitor.nextLine();
-        System.out.print("Digite a rentabilidade (Ex: 0.08 para 8%): ");
-        double rentabilidadeInvestimento = leitor.nextDouble();
-        leitor.nextLine();
-        System.out.print("Digite o prazo do investimento: ");
-        String prazoInvestimento = leitor.nextLine();
-
-        Investimento i = new Investimento(tipoInvestimento, valorInvestido, rentabilidadeInvestimento, prazoInvestimento);
-        i.definirPerfilInvestidor("Conservador");
-        i.sugerirInvestimentos();
-        i.simularRentabilidade();
-
-
-        System.out.println("\nTestes de Segurança e IA");
-        System.out.print("Digite um valor de gasto para análise (ex: 550.0): ");
-        double gastoParaAnalise = leitor.nextDouble();
-        leitor.nextLine();
-        System.out.print("Digite uma categoria de gasto para sugestão (ex: Alimentação): ");
-        String categoriaParaAnalise = leitor.nextLine();
-
-        InteligenciaArtificial ia = new InteligenciaArtificial();
-        ia.analisarHabitosConsumo(gastoParaAnalise);
-        ia.sugerirEconomia(categoriaParaAnalise);
-        ia.assistenteVirtual();
-
-        leitor.close();
+        sc.close();
     }
 }

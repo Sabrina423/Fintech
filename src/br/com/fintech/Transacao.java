@@ -1,29 +1,27 @@
 package br.com.fintech;
 
+import java.time.LocalDate;
+
 public class Transacao {
-    private int id;
+    private String descricao;
     private double valor;
-    private String tipo;
-    private String data;
-    private String categoria;
+    private LocalDate data;
 
-    public Transacao(int id, double valor, String tipo, String data, String categoria ){
-        this.id = id;
+    public Transacao(String descricao, double valor, LocalDate data) {
+        this.descricao = descricao;
         this.valor = valor;
-        this.tipo = tipo;
         this.data = data;
-        this.categoria = categoria;
     }
 
-    public void executarTransacao(){
-        System.out.println("Executando transação: " + tipo + "de R$" + valor + "em" + data);
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void cancelarTransacao(){
-        System.out.println("Cancelando transação: " + id);
+    public double getValor() {
+        return valor;
     }
 
-    public void filtrarTransacoesPorCategoria(){
-        System.out.println("Filtrando transações da categoria " + categoria);
+    public LocalDate getData() {
+        return data;
     }
 }

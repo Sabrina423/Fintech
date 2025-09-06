@@ -1,25 +1,39 @@
 package br.com.fintech;
 
 public class Conta {
-    private int numeroConta;
-    private String tipoConta;
+    private String numero;
+    private String titular;
     private double saldo;
 
-    public Conta (int numeroConta, String tipoConta, double saldo){
-        this.numeroConta = numeroConta;
-        this.tipoConta = tipoConta;
-        this.saldo = saldo;
+    public Conta(String numero, String titular, double saldoInicial) {
+        this.numero = numero;
+        this.titular = titular;
+        this.saldo = saldoInicial;
     }
 
-    public void consultarSaldo(){
-        System.out.println("Saldo atual da conta" + numeroConta + "R$" + saldo);
+    public String getNumero() {
+        return numero;
     }
 
-    public void exibirHistoricoTransacoes(){
-        System.out.println("Exibindo histórico de transações da conta" + numeroConta);
+    public String getTitular() {
+        return titular;
     }
 
-    public void sincronizarComBanco(){
-        System.out.println("Sincronizando  dados da conta" + numeroConta);
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void depositar(double valor) {
+        if (valor > 0) {
+            saldo += valor;
+        }
+    }
+
+    public boolean sacar(double valor) {
+        if (valor > 0 && saldo >= valor) {
+            saldo -= valor;
+            return true;
+        }
+        return false;
     }
 }

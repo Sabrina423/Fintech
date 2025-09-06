@@ -1,27 +1,29 @@
 package br.com.fintech;
 
 public class Divida {
-    private String credor;
+    private String descricao;
     private double valor;
-    private String dataVencimento;
-    private String status;
+    private boolean paga;
 
-    public  Divida(String credor, double valor, String dataVencimento, String status){
-        this.credor = credor;
+    public Divida(String descricao, double valor) {
+        this.descricao = descricao;
         this.valor = valor;
-        this.dataVencimento = dataVencimento;
-        this.status = status;
+        this.paga = false;
     }
 
-    public void cadastrarDivida() {
-        System.out.println("Cadastrando dívida com " + credor + " no valor de R$ " + valor);
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void listarDividas() {
-        System.out.println("Listando dívida com " + credor + ": " + status + " - Vencimento: " + dataVencimento);
+    public double getValor() {
+        return valor;
     }
 
-    public void calcularJuros(){
-        System.out.println("Calculando juros da dívida com " + credor);
+    public boolean isPaga() {
+        return paga;
+    }
+
+    public void quitar() {
+        this.paga = true;
     }
 }
